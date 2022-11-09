@@ -2,6 +2,7 @@ package com.example.backend;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -16,6 +17,8 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+    public static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
     private final UserService userService;
 
     @Bean
@@ -24,7 +27,9 @@ public class SecurityConfig {
                 .csrf().disable()
                 .httpBasic().and()
                 .authorizeRequests()
-                .antMatchers("/api/animals", "/api/app-users/login", "/api/app-users/logout").authenticated()
+                .antMatchers(HttpMethod.POST, "/api/app-users")
+                .permitAll()
+                .antMatchers("/api/animals", "/api/app-users/login", "/api/app-users/logout", "/api/app-users/me").authenticated()
                 .anyRequest().denyAll()
                 .and().build();
     }
