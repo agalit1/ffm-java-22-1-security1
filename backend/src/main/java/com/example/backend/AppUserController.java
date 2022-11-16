@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpSession;
 
 @RestController
@@ -24,11 +25,11 @@ public class AppUserController {
 
     @GetMapping("/me")
     public String me() {
-        User loggedInUser = (User) SecurityContextHolder
+        return SecurityContextHolder
                 .getContext()
                 .getAuthentication()
-                .getPrincipal();
-        return loggedInUser.getUsername();
+                .getName();
+
     }
 
     @PostMapping

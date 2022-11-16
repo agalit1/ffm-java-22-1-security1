@@ -27,9 +27,19 @@ public class SecurityConfig {
                 .csrf().disable()
                 .httpBasic().and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/api/app-users")
-                .permitAll()
-                .antMatchers("/api/animals", "/api/app-users/login", "/api/app-users/logout", "/api/app-users/me").authenticated()
+                .antMatchers(
+                        HttpMethod.POST,
+                        "/api/app-users"
+                ).permitAll()
+                .antMatchers(
+                        HttpMethod.GET,
+                        "/api/app-users/me"
+                ).permitAll()
+                .antMatchers(
+                        "/api/animals",
+                        "/api/app-users/login",
+                        "/api/app-users/logout"
+                ).authenticated()
                 .anyRequest().denyAll()
                 .and().build();
     }
