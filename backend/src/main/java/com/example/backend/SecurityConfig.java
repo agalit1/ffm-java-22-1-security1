@@ -1,5 +1,4 @@
 package com.example.backend;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
